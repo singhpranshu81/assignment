@@ -1,0 +1,143 @@
+<body>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    rel="stylesheet"
+  />
+
+  <i class="fas fa-user" style="font-size: 24px"></i>
+  <span style="font-size: 24px">Customers</span>
+  <hr />
+  <div class="container text-center">
+    <div class="row">
+      <div class="col">
+        <i class="fas fa-th-large"></i>
+        <a
+          class="navbar-brand"
+          (click)="showCardView()"
+          style="cursor: pointer; color: black"
+          onmouseover="this.style.color='blue'"
+          onmouseout="this.style.color='black'"
+        >
+          Card View</a
+        >
+      </div>
+      <div class="col">
+        <i class="fas fa-list"></i>
+        <a
+          class="navbar-brand"
+          (click)="showList()"
+          onmouseout="this.style.color='black'"
+          onmouseover="this.style.color='blue'"
+          style="cursor: pointer"
+        >
+          List View</a
+        >
+      </div>
+      <div class="col">
+        <i class="fas fa-map-marker-alt"></i>
+        <a class="navbar-brand" href="#"> Map View</a>
+      </div>
+      <div class="col">
+        <i class="fas fa-plus"></i>
+        <a
+          class="navbar-brand"
+          (click)="createCustomer()"
+          style="cursor: pointer"
+          onmouseover="this.style.color='blue'"
+          onmouseout="this.style.color='black'"
+        >
+          New Customer</a
+        >
+      </div>
+      <div class="col d-flex align-items-center">
+        <span>Filter:</span>
+        <form class="d-flex ms-2" role="search">
+          <input
+            class="form-control me-2"
+            type="search"
+            name="searchText"
+            [(ngModel)]="searchText"
+            placeholder="Search entry"
+            aria-label="Search"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+  <table *ngIf="clicked" class="table table-striped mt-4">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">FirstName</th>
+        <th scope="col">LastName</th>
+        <th scope="col">Address</th>
+        <th scope="col">City</th>
+        <th scope="col">State</th>
+        <th scope="col">Order Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of customers | filter : searchText">
+        <td><img src="../../../assets/male.png" /></td>
+        <td>{{ customer.firstName }}</td>
+        <td>{{ customer.lastName }}</td>
+        <td>{{ customer.address }}</td>
+        <td>{{ customer.city }}</td>
+        <td>{{ customer.state }}</td>
+        <td>{{ total(customer.orders) }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="card" class="row row-cols-1 row-cols-md-3 g-4 mt-4">
+    <div class="col" *ngFor="let customer of customers | filter : searchText">
+      <div class="card h-100" style="max-width: 18rem">
+        <img
+          src="../../../assets/male.png"
+          class="card-img-top"
+          alt="Customer Image"
+        />
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ customer.firstName }} {{ customer.lastName }}
+          </h5>
+          <p class="card-text">
+            <strong>Address:</strong> {{ customer.address }}<br />
+            <strong>City:</strong> {{ customer.city }}<br />
+            <strong>State:</strong> {{ customer.state }}<br />
+            <strong>Order Total:</strong> {{ total(customer.orders) }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-4">
+    <form *ngIf="ct">
+      <div class="mb-3">
+        <label for="firstName" class="form-label">First Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="firstName"
+          name="firstName"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="lastName" class="form-label">Last Name</label>
+        <input type="text" class="form-control" id="lastName" name="lastName" />
+      </div>
+      <div class="mb-3">
+        <label for="address" class="form-label">Address</label>
+        <input type="text" class="form-control" id="address" name="address" />
+      </div>
+      <div class="mb-3">
+        <label for="city" class="form-label">City</label>
+        <input type="text" class="form-control" id="city" name="city" />
+      </div>
+      <div class="mb-3">
+        <label for="state" class="form-label">State</label>
+        <input type="text" class="form-control" id="state" name="state" />
+      </div>
+      <button type="submit" class="btn btn-primary">Create Customer</button>
+    </form>
+  </div>
+</body>
